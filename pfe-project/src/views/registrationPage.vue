@@ -11,7 +11,6 @@ import Button from 'primevue/button'
 import Message from 'primevue/message'
 import Toastify from 'toastify-js'
 
-
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -43,19 +42,22 @@ const registerUser = async () => {
     return
   }
 
+  try {
     // Register the user
-  const res = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/register/', {
-    username: form.value.username,
-    email: form.value.email,
-    password: form.value.password,
-    confirm_password: form.value.confirmPassword,
-    profile: form.value.profile,
-  })
-  // const profileId = response.data.profile.pk
-  // userStore.setProfileId(profileId)
-  try{
+    const res = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/register/', {
+      username: form.value.username,
+      email: form.value.email,
+      password: form.value.password,
+      confirm_password: form.value.confirmPassword,
+      profile: form.value.profile,
+    })
+    console.log('Registration response:', res.data)
+
+    // Login the user automatically after successful registration
+    try {
       await userStore.login(form.value.username, form.value.password)
       await userStore.fetchUserDetails()
+
       Toastify({
         text: 'Registration successful!',
         duration: 3000,
@@ -64,8 +66,17 @@ const registerUser = async () => {
         backgroundColor: '#4CAF50',
         className: 'toast-success',
       }).showToast()
-    }catch (error) {
-      console.error('Error logging in:', error.response?.data || error.message)
+
+      // Redirect based on role
+      const role = form.value.profile.role
+      if (role === 'owner') {
+        router.push('/establishement-create')
+      } else {
+        router.push('/')
+      }
+
+    } catch (loginError) {
+      console.error('Error logging in:', loginError.response?.data || loginError.message)
       Toastify({
         text: 'Login failed!',
         duration: 3000,
@@ -76,30 +87,22 @@ const registerUser = async () => {
       }).showToast()
     }
 
-    // Login the user automatically
-    // const loginResponse = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/token/', {
-    //   username: form.value.username,
-    //   password: form.value.password,
-    // })
+  } catch (registrationError) {
+    console.error('Registration error:', registrationError.response?.data || registrationError.message)
+    errors.value = registrationError.response?.data || {}
 
-    // const { access, refresh } = loginResponse.data
-    // localStorage.setItem('accessToken', access)
-    // localStorage.setItem('refreshToken', refresh)
-
-    // userStore.setAuthenticated(true)
-
-    // Redirect based on role
-    const role = form.value.profile.role
-    if (role === 'owner') {
-      router.push('/establishement-create')
-    } else {
-      router.push('/')
-    }
-  } catch (error) {
-    errors.value = error.response?.data || {}
+    Toastify({
+      text: 'Registration failed!',
+      duration: 3000,
+      gravity: 'top',
+      position: 'right',
+      backgroundColor: '#F44336',
+      className: 'toast-error',
+    }).showToast()
   }
 }
 </script>
+
 
 <template>
   <div class="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-xl border border-gray-100">
