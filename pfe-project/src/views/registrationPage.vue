@@ -53,7 +53,7 @@ const registerUser = async () => {
       profile: form.value.profile,
     })
     console.log(res)
-    except(e){
+    catch(e){
       console.log("error"+e)
     }
     // const profileId = response.data.profile.pk
