@@ -45,7 +45,7 @@ const registerUser = async () => {
 
   try {
     // Register the user
-    await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+    await axios.post('https:/airbnb-3uzy.onrender.com/api/accounts/register/', {
       username: form.value.username,
       email: form.value.email,
       password: form.value.password,
@@ -79,7 +79,7 @@ const registerUser = async () => {
     }
 
     // Login the user automatically
-    // const loginResponse = await axios.post('http://127.0.0.1:8000/api/accounts/token/', {
+    // const loginResponse = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/token/', {
     //   username: form.value.username,
     //   password: form.value.password,
     // })
