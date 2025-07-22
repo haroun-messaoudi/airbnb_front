@@ -5,7 +5,7 @@ import api from '@/axios'
 
 import roomCard from '@/components/roomCard.vue'
 import profilenav from '@/components/profilenav.vue'
-import HotelReservationDialog from '@/components/HotelReservationDialog.vue'
+import HotelReservationDialog from '@/components/hotelReservationDialog.vue'
 
 // grab the establishment id from the URL
 const route = useRoute()
