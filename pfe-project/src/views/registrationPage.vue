@@ -52,13 +52,9 @@ const registerUser = async () => {
       confirm_password: form.value.confirmPassword,
       profile: form.value.profile,
     })
-    console.log(res)
-    catch(e){
-      console.log("error"+e)
-    }
     // const profileId = response.data.profile.pk
     // userStore.setProfileId(profileId)
-    try{
+  }try{
       await userStore.login(form.value.username, form.value.password)
       await userStore.fetchUserDetails()
       Toastify({
