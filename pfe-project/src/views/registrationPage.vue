@@ -45,14 +45,17 @@ const registerUser = async () => {
 
   try {
     // Register the user
-    await axios.post('https:/airbnb-3uzy.onrender.com/api/accounts/register/', {
+    const res = await axios.post('https:/airbnb-3uzy.onrender.com/api/accounts/register/', {
       username: form.value.username,
       email: form.value.email,
       password: form.value.password,
       confirm_password: form.value.confirmPassword,
       profile: form.value.profile,
     })
-
+    console.log(res)
+    except(e){
+      console.log("error"+e)
+    }
     // const profileId = response.data.profile.pk
     // userStore.setProfileId(profileId)
     try{
