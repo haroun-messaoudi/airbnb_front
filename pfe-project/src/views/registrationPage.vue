@@ -43,18 +43,17 @@ const registerUser = async () => {
     return
   }
 
-  try {
     // Register the user
-    const res = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/register/', {
-      username: form.value.username,
-      email: form.value.email,
-      password: form.value.password,
-      confirm_password: form.value.confirmPassword,
-      profile: form.value.profile,
-    })
-    // const profileId = response.data.profile.pk
-    // userStore.setProfileId(profileId)
-  }try{
+  const res = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/register/', {
+    username: form.value.username,
+    email: form.value.email,
+    password: form.value.password,
+    confirm_password: form.value.confirmPassword,
+    profile: form.value.profile,
+  })
+  // const profileId = response.data.profile.pk
+  // userStore.setProfileId(profileId)
+  try{
       await userStore.login(form.value.username, form.value.password)
       await userStore.fetchUserDetails()
       Toastify({
