@@ -45,7 +45,7 @@ const registerUser = async () => {
 
   try {
     // Register the user
-    const res = await axios.post('https:/airbnb-3uzy.onrender.com/api/accounts/register/', {
+    const res = await axios.post('https://airbnb-3uzy.onrender.com/api/accounts/register/', {
       username: form.value.username,
       email: form.value.email,
       password: form.value.password,
